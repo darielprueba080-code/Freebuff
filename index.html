@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freebuff · Página de inicio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --bg-soft: #12151d;
+      --card: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.09);
+      --text: #e8ebf2;
+      --muted: #98a0b3;
+      --accent: #6c8cff;
+      --accent-2: #a855f7;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Fondo decorativo */
+    .glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(600px 400px at 15% 0%, rgba(108, 140, 255, 0.18), transparent 70%),
+        radial-gradient(600px 400px at 85% 10%, rgba(168, 85, 247, 0.15), transparent 70%);
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navegación */
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(11, 13, 18, 0.7);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 66px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo span.mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-size: 0.95rem;
+    }
+
+    nav ul { display: flex; gap: 26px; list-style: none; }
+
+    nav a.link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    nav a.link:hover { color: var(--text); }
+
+    @media (max-width: 720px) { nav ul { display: none; } }
+
+    /* Héroe */
+    .hero {
+      padding: 96px 0 72px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .badge i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #3ddc97;
+      box-shadow: 0 0 10px #3ddc97;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    h1 .grad {
+      background: linear-gradient(100deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      max-width: 600px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.12rem);
+    }
+
+    .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 11px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 8px 26px rgba(108, 140, 255, 0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(108, 140, 255, 0.45); }
+
+    .btn-ghost { background: var(--card); border-color: var(--border); color: var(--text); }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+    /* Secciones */
+    section { padding: 62px 0; }
+
+    .section-title {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      letter-spacing: -0.025em;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .section-sub { text-align: center; color: var(--muted); margin-bottom: 44px; font-size: 0.98rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(108, 140, 255, 0.45);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .card .ico {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: rgba(108, 140, 255, 0.14);
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+
+    .card h3 { font-size: 1.02rem; margin-bottom: 7px; letter-spacing: -0.01em; }
+    .card p { color: var(--muted); font-size: 0.9rem; }
+
+    /* Caja de código */
+    .codebox {
+      max-width: 620px;
+      margin: 0 auto;
+      background: #0a0c11;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .codebox header {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: none;
+    }
+
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+
+    .codebox pre {
+      padding: 20px 18px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.87rem;
+      line-height: 1.75;
+      overflow-x: auto;
+      color: #c7d0e0;
+    }
+
+    .codebox .c { color: #5d6a80; }
+    .codebox .k { color: #a855f7; }
+    .codebox .s { color: #3ddc97; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Aparición al hacer scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="logo" href="#top">
+          <span class="mark">⚡</span> Freebuff
+        </a>
+        <ul>
+          <li><a class="link" href="#features">Características</a></li>
+          <li><a class="link" href="#start">Empezar</a></li>
+          <li><a class="link" href="https://github.com/darielprueba080-code/Freebuff" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <div class="hero">
+        <div class="badge"><i></i> Proyecto en construcción</div>
+        <h1>Construye más rápido con <span class="grad">Freebuff</span></h1>
+        <p class="lead">
+          Un punto de partida limpio, ligero y rápido. Un solo archivo HTML,
+          sin dependencias y listo para personalizar.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#start">Comenzar ahora →</a>
+          <a class="btn btn-ghost" href="https://github.com/darielprueba080-code/Freebuff" target="_blank" rel="noopener">Ver repositorio</a>
+        </div>
+      </div>
+
+      <section id="features">
+        <h2 class="section-title reveal">Todo lo esencial, nada de más</h2>
+        <p class="section-sub reveal">Diseñado para ser simple de leer y fácil de modificar.</p>
+        <div class="grid">
+          <article class="card reveal">
+            <div class="ico">📦</div>
+            <h3>Sin dependencias</h3>
+            <p>HTML, CSS y JavaScript puros. Nada que instalar ni compilar.</p>
+          </article>
+          <article class="card reveal">
+            <div class="ico">⚡</div>
+            <h3>Ultraligero</h3>
+            <p>Carga al instante gracias a un único archivo autocontenido.</p>
+          </article>
+          <article class="card reveal">
+            <div class="ico">📱</div>
+            <h3>Responsive</h3>
+            <p>Se adapta a móvil, tablet y escritorio sin hojas de estilo extra.</p>
+          </article>
+          <article class="card reveal">
+            <div class="ico">🌙</div>
+            <h3>Modo oscuro</h3>
+            <p>Paleta oscura con acentos en degradado y buen contraste.</p>
+          </article>
+          <article class="card reveal">
+            <div class="ico">✨</div>
+            <h3>Animaciones suaves</h3>
+            <p>Entradas al hacer scroll y respeto por reduced-motion.</p>
+          </article>
+          <article class="card reveal">
+            <div class="ico">🛠️</div>
+            <h3>Fácil de editar</h3>
+            <p>Variables CSS en <code>:root</code> para cambiar todo el tema.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="start">
+        <h2 class="section-title reveal">Empieza en 30 segundos</h2>
+        <p class="section-sub reveal">Clona el repositorio y abre el archivo en tu navegador.</p>
+        <div class="codebox reveal">
+          <header>
+            <span class="dot" style="background:#ff5f57"></span>
+            <span class="dot" style="background:#febc2e"></span>
+            <span class="dot" style="background:#28c840"></span>
+          </header>
+          <pre><span class="c"># 1. Clona el proyecto</span>
+<span class="k">git</span> clone https://github.com/darielprueba080-code/Freebuff.git
+
+<span class="c"># 2. Entra al directorio</span>
+<span class="k">cd</span> Freebuff
+
+<span class="c"># 3. Abre la página</span>
+<span class="k">open</span> index.html   <span class="c"># macOS</span>
+<span class="k">xdg-open</span> index.html <span class="c"># Linux</span></pre>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Hecho con ❤️ · <a href="https://github.com/darielprueba080-code/Freebuff" target="_blank" rel="noopener">Freebuff</a>
+      · <span id="year"></span>
+    </div>
+  </footer>
+
+  <script>
+    // Año actual en el pie de página
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Aparición de elementos al hacer scroll
+    const items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      items.forEach((el) => io.observe(el));
+    } else {
+      items.forEach((el) => el.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
